@@ -8,6 +8,7 @@ export default function App() {
   const [output, setOutput] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarRefreshKey, setSidebarRefreshKey] = useState(0);
 
   async function handleRemix() {
     setLoading(true);
@@ -21,6 +22,8 @@ export default function App() {
     }
   }
 
+  const handleTweetSaved = () => setSidebarRefreshKey(k => k + 1);
+
   return (
     <div className="min-h-screen bg-sky-50 flex flex-col items-center justify-center">
       <button
@@ -29,7 +32,7 @@ export default function App() {
       >
         Show Saved Tweets
       </button>
-      <SavedTweetsSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <SavedTweetsSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} refreshKey={sidebarRefreshKey} />
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-3xl w-full mx-auto mt-12">
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-2">Content Remixer</h1>
         <p className="text-lg text-gray-500 mb-8 text-center">Transform your content with AI-powered remixing</p>
@@ -44,7 +47,7 @@ export default function App() {
             <p className="mb-6 text-lg font-semibold text-gray-700 text-center">
               Here are 5 tweets based on the blog post, following the style, tone, and voice:
             </p>
-            <GeneratedTweets tweets={output.filter(tweet => !tweet.toLowerCase().startsWith("here are 5 tweets"))} />
+            <GeneratedTweets tweets={output.filter(tweet => !tweet.toLowerCase().startsWith("here are 5 tweets"))} onTweetSaved={handleTweetSaved} />
           </div>
         )}
         <div className="flex justify-center mt-8">

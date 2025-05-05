@@ -23,4 +23,13 @@ export async function deleteTweet(id) {
     .delete()
     .eq('id', id);
   if (error) throw error;
+}
+
+export async function updateTweet(id, newText) {
+  const { data, error } = await supabase
+    .from('saved_tweets')
+    .update({ text: newText })
+    .eq('id', id);
+  if (error) throw error;
+  return data;
 } 
