@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { tweetsFromPosts } from "./api/claude";
+import GeneratedTweets from "./components/GeneratedTweets";
+import SavedTweetsSidebar from "./components/SavedTweetsSidebar";
 
 export default function App() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   async function handleRemix() {
     setLoading(true);
@@ -20,6 +23,13 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-sky-50 flex flex-col items-center justify-center">
+      <button
+        className="fixed top-4 right-4 z-50 px-6 py-3 bg-green-600 text-white rounded-3xl shadow-lg font-semibold text-lg hover:bg-green-700 transition-all duration-200"
+        onClick={() => setSidebarOpen(true)}
+      >
+        Show Saved Tweets
+      </button>
+      <SavedTweetsSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="bg-white rounded-3xl shadow-xl p-8 max-w-3xl w-full mx-auto mt-12">
         <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-2">Content Remixer</h1>
         <p className="text-lg text-gray-500 mb-8 text-center">Transform your content with AI-powered remixing</p>
@@ -34,26 +44,7 @@ export default function App() {
             <p className="mb-6 text-lg font-semibold text-gray-700 text-center">
               Here are 5 tweets based on the blog post, following the style, tone, and voice:
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {output
-                .filter(tweet => !tweet.toLowerCase().startsWith("here are 5 tweets"))
-                .map((tweet, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-2xl shadow-xl p-6 text-gray-800 border border-blue-100 space-y-4"
-                  >
-                    <p>{tweet}</p>
-                    <div className="flex justify-end">
-                      <button
-                        className="bg-sky-500 text-white font-medium px-4 py-2 rounded-lg hover:bg-sky-600 transition"
-                        onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweet)}`, '_blank')}
-                      >
-                        Tweet
-                      </button>
-                    </div>
-                  </div>
-                ))}
-            </div>
+            <GeneratedTweets tweets={output.filter(tweet => !tweet.toLowerCase().startsWith("here are 5 tweets"))} />
           </div>
         )}
         <div className="flex justify-center mt-8">
