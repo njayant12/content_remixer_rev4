@@ -50,15 +50,7 @@ export default function App() {
             <GeneratedTweets tweets={output.filter(tweet => !tweet.toLowerCase().startsWith("here are 5 tweets"))} onTweetSaved={handleTweetSaved} />
           </div>
         )}
-        <div className="flex justify-center mt-8">
-          <button
-            className="w-1/2 max-w-xs bg-blue-500 text-white py-4 rounded-3xl font-bold text-xl shadow-md hover:bg-blue-600 transition disabled:bg-blue-200 disabled:text-blue-400"
-            onClick={handleRemix}
-            disabled={loading || !input.trim()}
-          >
-            {loading ? "Remixing..." : "Remix Content"}
-          </button>
-        </div>
+
       </div>
     </div>
   );
