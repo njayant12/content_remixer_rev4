@@ -1,3 +1,24 @@
+# 🚀 Running the App Locally
+
+1. **Install dependencies**  
+   ```bash
+   npm install
+   ```
+
+2. **Start the backend server**  
+   (in one terminal)
+   ```bash
+   node server.js
+   ```
+   The backend will run on http://localhost:3001
+
+3. **Start the frontend (Vite dev server)**  
+   (in a separate terminal)
+   ```bash
+   npm run dev
+   ```
+   The frontend will run on http://localhost:5173 (or the port Vite chooses).
+
 ## 🛠️ Tech Stack
 
 A content remixing tool using React.
